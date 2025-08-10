@@ -1,0 +1,247 @@
+<div class="p-6 bg-gradient-to-br from-blue-50 via-indigo-50 to-blue-100 min-h-screen relative overflow-hidden">
+  <!-- Animated background elements -->
+  <div class="absolute inset-0 overflow-hidden z-0">
+    <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-200 rounded-full opacity-20 animate-blob-slow"></div>
+    <div class="absolute bottom-1/3 right-1/4 w-48 h-48 bg-indigo-200 rounded-full opacity-20 animate-blob-slow-delay"></div>
+    <div class="absolute top-1/3 right-1/3 w-32 h-32 bg-purple-200 rounded-full opacity-20 animate-blob-slow-delay-2"></div>
+  </div>
+
+  <div class="relative z-10">
+    <!-- Header with floating effect -->
+    <div class="flex justify-between items-center mb-8 transform transition duration-500 hover:-translate-y-1">
+      <h2 class="text-3xl md:text-4xl font-bold text-blue-900 tracking-tight flex items-center gap-3">
+        <span class="icon-container bg-gradient-to-br from-blue-500 to-indigo-600 shadow-lg">
+          <i class="fas fa-school text-white text-xl"></i>
+        </span>
+        <span class="relative">
+          Liste des classes
+          <span class="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-full"></span>
+        </span>
+      </h2>
+      
+      <button (click)="ouvrirModal()"
+        class="group relative overflow-hidden bg-gradient-to-r from-blue-500 via-indigo-600 to-blue-700 hover:from-blue-600 hover:via-indigo-700 hover:to-blue-800 text-white px-6 py-3 rounded-xl font-semibold shadow-lg transform hover:scale-105 transition-all duration-300 flex items-center gap-3 focus:outline-none focus:ring-4 focus:ring-indigo-400/50"
+        aria-label="Ajouter une classe">
+        <span class="relative z-10 flex items-center gap-2">
+          <i class="fas fa-plus text-lg group-hover:animate-pulse"></i>
+          <span>Ajouter une classe</span>
+        </span>
+        <span class="absolute inset-0 bg-gradient-to-r from-blue-600 via-indigo-700 to-blue-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+      </button>
+    </div>
+
+    <!-- Enhanced search bar -->
+    <div class="mb-6 relative max-w-md mx-auto transform transition duration-500 hover:scale-[1.02]">
+      <div class="relative">
+        <input 
+          type="text" 
+          placeholder="Rechercher par libellé..." 
+          [(ngModel)]="termeRecherche" 
+          (keyup)="rechercher()"
+          class="w-full pl-12 pr-5 py-3 rounded-xl border-2 border-blue-200 focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100 font-medium text-blue-800 bg-white/90 backdrop-blur-sm shadow-md transition-all duration-300"
+          aria-label="Rechercher par libellé"
+        >
+        <span class="absolute left-4 top-3.5 text-blue-500 text-lg">
+          <i class="fas fa-search"></i>
+        </span>
+        <span class="absolute right-4 top-3.5 text-blue-400 text-sm animate-pulse">
+          <i class="fas fa-keyboard"></i>
+        </span>
+      </div>
+    </div>
+
+    <!-- Enhanced table with glassmorphism effect -->
+    <div class="overflow-x-auto bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-white/30 relative">
+      <div class="absolute inset-0 bg-gradient-to-br from-blue-50/30 to-indigo-50/30 rounded-2xl -z-10"></div>
+      
+      <table class="min-w-full divide-y divide-blue-200/50" role="table" aria-label="Liste des classes">
+        <thead class="bg-gradient-to-r from-blue-50 to-indigo-50">
+          <tr>
+            <th scope="col" class="px-8 py-4 text-left text-sm font-bold text-blue-800 uppercase tracking-wider">Nom</th>
+            <th scope="col" class="px-8 py-4 text-left text-sm font-bold text-blue-800 uppercase tracking-wider">Niveau</th>
+            <th scope="col" class="px-8 py-4 text-left text-sm font-bold text-blue-800 uppercase tracking-wider">Spécialité</th>
+            <th scope="col" class="px-8 py-4 text-left text-sm font-bold text-blue-800 uppercase tracking-wider">Département</th>
+            <th scope="col" class="px-8 py-4 text-left text-sm font-bold text-blue-800 uppercase tracking-wider">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-blue-200/30">
+          <tr *ngFor="let classe of classes" 
+               class="hover:bg-blue-50/50 transition-all duration-300 cursor-pointer group relative overflow-hidden">
+            <td class="px-8 py-5 whitespace-nowrap text-sm font-semibold text-blue-900">
+              <span class="flex items-center gap-2">
+                <span class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
+                {{ classe.libelle }}
+              </span>
+            </td>
+            <td class="px-8 py-5 whitespace-nowrap text-sm text-blue-800 font-medium">{{ classe.niveau }}</td>
+            <td class="px-8 py-5 whitespace-nowrap text-sm text-blue-800 font-medium">{{ classe.specialite }}</td>
+            <td class="px-8 py-5 whitespace-nowrap text-sm text-blue-800 font-medium">{{ classe.departement }}</td>
+            <td class="px-8 py-5 whitespace-nowrap text-sm flex gap-3">
+              <button (click)="ouvrirModal(true, classe)" 
+                [attr.aria-label]="'Modifier ' + classe.libelle"
+                class="p-2.5 rounded-xl text-green-600 hover:bg-green-100/80 transition-all duration-300 shadow hover:shadow-md focus:outline-none focus:ring-2 focus:ring-green-300/50 group-hover:transform group-hover:scale-110"
+                type="button">
+                <i class="fas fa-edit text-lg"></i>
+              </button>
+              <button (click)="supprimer(classe.id!)" 
+                [attr.aria-label]="'Supprimer ' + classe.libelle"
+                class="p-2.5 rounded-xl text-red-600 hover:bg-red-100/80 transition-all duration-300 shadow hover:shadow-md focus:outline-none focus:ring-2 focus:ring-red-300/50 group-hover:transform group-hover:scale-110"
+                type="button">
+                <i class="fas fa-trash-alt text-lg"></i>
+              </button>
+              <button (click)="details(classe.id!)" 
+                [attr.aria-label]="'Voir les détails de ' + classe.libelle"
+                class="p-2.5 rounded-xl text-blue-600 hover:bg-blue-100/80 transition-all duration-300 shadow hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-300/50 group-hover:transform group-hover:scale-110"
+                type="button">
+                <i class="fas fa-eye text-lg"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Enhanced Modal -->
+<div id="ajouterClasseModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"
+  class="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center z-50 hidden animate-fadeIn scale-90">
+  <div class="bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-2xl p-8 w-full max-w-lg relative transform transition-all duration-300 border border-white/30 overflow-hidden">
+    <!-- Decorative elements -->
+    <div class="absolute -top-20 -right-20 w-40 h-40 bg-blue-200 rounded-full opacity-20"></div>
+    <div class="absolute -bottom-20 -left-20 w-60 h-60 bg-indigo-200 rounded-full opacity-20"></div>
+    
+    <button class="absolute top-4 right-4 text-blue-500 hover:text-red-500 text-2xl font-bold z-10 transition-colors duration-300"
+      (click)="fermerModal()" aria-label="Fermer la fenêtre" type="button">
+      <i class="fas fa-times"></i>
+    </button>
+    
+    <div class="relative z-10">
+      <h3 id="modalTitle" class="text-2xl font-bold mb-6 text-blue-900 flex items-center gap-3">
+        <span class="icon-container bg-gradient-to-br from-blue-500 to-indigo-600 shadow-md">
+          <i [class]="modeModification ? 'fas fa-edit' : 'fas fa-plus'"></i>
+        </span>
+        {{ modeModification ? 'Modifier une classe' : 'Ajouter une classe' }}
+      </h3>
+
+      <form [formGroup]="classeForm" (ngSubmit)="onSubmit()" class="space-y-5" novalidate>
+        <div class="form-group">
+          <label for="libelle" class="block text-sm font-semibold text-blue-800 mb-2">Nom de la classe</label>
+          <div class="relative">
+            <input id="libelle" formControlName="libelle" type="text"
+              class="w-full px-5 py-3 border-2 border-blue-200 rounded-xl focus:outline-none focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100 bg-white/80 backdrop-blur-sm shadow-sm transition-all duration-300"
+              placeholder="Ex: 6ème A" />
+            <span class="absolute right-3 top-3.5 text-blue-400">
+              <i class="fas fa-pencil-alt"></i>
+            </span>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="niveau" class="block text-sm font-semibold text-blue-800 mb-2">Niveau</label>
+          <div class="relative">
+            <input id="niveau" formControlName="niveau" type="text"
+              class="w-full px-5 py-3 border-2 border-blue-200 rounded-xl focus:outline-none focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100 bg-white/80 backdrop-blur-sm shadow-sm transition-all duration-300"
+              placeholder="Ex: Collège, Lycée" />
+            <span class="absolute right-3 top-3.5 text-blue-400">
+              <i class="fas fa-layer-group"></i>
+            </span>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="specialite" class="block text-sm font-semibold text-blue-800 mb-2">Spécialité</label>
+          <div class="relative">
+            <input id="specialite" formControlName="specialite" type="text"
+              class="w-full px-5 py-3 border-2 border-blue-200 rounded-xl focus:outline-none focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100 bg-white/80 backdrop-blur-sm shadow-sm transition-all duration-300"
+              placeholder="Ex: Sciences, Lettres" />
+            <span class="absolute right-3 top-3.5 text-blue-400">
+              <i class="fas fa-atom"></i>
+            </span>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="departement" class="block text-sm font-semibold text-blue-800 mb-2">Département</label>
+          <div class="relative">
+            <input id="departement" formControlName="departement" type="text"
+              class="w-full px-5 py-3 border-2 border-blue-200 rounded-xl focus:outline-none focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100 bg-white/80 backdrop-blur-sm shadow-sm transition-all duration-300"
+              placeholder="Ex: Mathématiques, Histoire" />
+            <span class="absolute right-3 top-3.5 text-blue-400">
+              <i class="fas fa-building"></i>
+            </span>
+          </div>
+        </div>
+
+        <div class="flex justify-end gap-4 pt-6">
+          <button type="button" (click)="fermerModal()"
+            class="bg-blue-200 hover:bg-blue-300 text-blue-800 px-6 py-3 rounded-xl flex items-center gap-2 focus:outline-none focus:ring-4 focus:ring-blue-300/50 transition-all duration-300 shadow hover:shadow-md">
+            <i class="fas fa-times"></i> Annuler
+          </button>
+          <button type="submit"
+            class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-6 py-3 rounded-xl shadow-lg flex items-center gap-2 focus:outline-none focus:ring-4 focus:ring-indigo-400/50 transition-all duration-300 transform hover:scale-105">
+            <i [class]="modeModification ? 'fas fa-save' : 'fas fa-plus-circle'"></i>
+            {{ modeModification ? 'Enregistrer' : 'Ajouter' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Base animations */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95) translateY(10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  
+  @keyframes blob {
+    0% { transform: translate(0px, 0px) scale(1); }
+    33% { transform: translate(30px, -50px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.9); }
+    100% { transform: translate(0px, 0px) scale(1); }
+  }
+  
+  /* Custom animations */
+  .animate-fadeIn {
+    animation: fadeIn 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6) forwards;
+  }
+  
+  .animate-blob-slow {
+    animation: blob 25s ease-in-out infinite;
+  }
+  
+  .animate-blob-slow-delay {
+    animation: blob 25s ease-in-out 5s infinite;
+  }
+  
+  .animate-blob-slow-delay-2 {
+    animation: blob 25s ease-in-out 10s infinite;
+  }
+  
+  /* Custom components */
+  .icon-container {
+    @apply w-10 h-10 rounded-xl flex items-center justify-center text-white shadow-md;
+    transition: all 0.3s ease;
+  }
+  
+  .form-group {
+    @apply transition-all duration-300 transform hover:-translate-y-0.5;
+  }
+  
+  /* Glassmorphism effect */
+  .glass-card {
+    @apply bg-white/80 backdrop-blur-sm border border-white/30 shadow-lg;
+  }
+  
+  /* Table row hover effect */
+  tr:hover td {
+    @apply transform translate-x-1 transition-transform duration-300;
+  }
+  
+  /* Button hover effects */
+  button:hover i {
+    @apply transform scale-125 transition-transform duration-300;
+  }
+</style>

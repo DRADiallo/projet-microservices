@@ -1,0 +1,296 @@
+<div class="max-w-7xl mx-auto p-6 bg-gradient-to-br from-blue-50 via-indigo-50 to-blue-100 min-h-screen relative overflow-hidden">
+  <!-- Animated background elements -->
+  <div class="absolute inset-0 overflow-hidden z-0">
+    <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-200 rounded-full opacity-10 animate-blob-slow"></div>
+    <div class="absolute bottom-1/3 right-1/4 w-48 h-48 bg-indigo-200 rounded-full opacity-10 animate-blob-slow-delay"></div>
+  </div>
+
+  <div class="relative z-10">
+    <!-- Enhanced header with floating effect -->
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-6 transform transition duration-500 hover:-translate-y-1">
+      <h2 class="text-3xl md:text-4xl font-extrabold flex items-center gap-3">
+        <span class="icon-container bg-gradient-to-br from-blue-500 to-indigo-600 shadow-lg">
+          <i class="fas fa-user-graduate text-white text-xl"></i>
+        </span>
+        <span class="relative">
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 animate-gradient-x">Liste des étudiants</span>
+          <span class="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-full"></span>
+        </span>
+      </h2>
+      
+      <!-- Enhanced add button -->
+      <button (click)="ouvrirModal(false)"
+        class="group relative overflow-hidden bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg transform hover:scale-105 transition-all duration-300 flex items-center gap-3"
+        aria-label="Ajouter un étudiant">
+        <span class="relative z-10 flex items-center gap-2">
+          <i class="fas fa-plus text-lg group-hover:animate-bounce"></i>
+          <span>Ajouter un étudiant</span>
+        </span>
+        <span class="absolute inset-0 bg-gradient-to-r from-indigo-600 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+      </button>
+    </div>
+
+    <!-- Enhanced search bar -->
+    <div class="mb-6 relative max-w-md transform transition duration-500 hover:scale-[1.02]">
+      <div class="relative">
+        <input 
+          type="text" 
+          placeholder="Rechercher par prénom..." 
+          [(ngModel)]="termeRecherche" 
+          (keyup)="rechercher()"
+          class="w-full pl-12 pr-5 py-3 rounded-xl border-2 border-blue-200 focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100 font-medium text-blue-800 bg-white/90 backdrop-blur-sm shadow-md transition-all duration-300"
+          aria-label="Rechercher par prénom"
+        >
+        <span class="absolute left-4 top-3.5 text-blue-500 text-lg">
+          <i class="fas fa-search"></i>
+        </span>
+        <span class="absolute right-4 top-3.5 text-blue-400 text-sm animate-pulse">
+          <i class="fas fa-keyboard"></i>
+        </span>
+      </div>
+    </div>
+
+    <!-- Enhanced table with glassmorphism effect -->
+    <div *ngIf="etudiants.length > 0" class="overflow-x-auto bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-white/30 relative">
+      <div class="absolute inset-0 bg-gradient-to-br from-blue-50/30 to-indigo-50/30 rounded-2xl -z-10"></div>
+      
+      <table class="min-w-full divide-y divide-blue-200/50">
+        <thead class="bg-gradient-to-r from-blue-50 to-indigo-50">
+          <tr>
+            <th scope="col" class="px-8 py-5 text-left text-lg font-bold text-blue-800 uppercase tracking-wider">Matricule</th>
+            <th scope="col" class="px-8 py-5 text-left text-lg font-bold text-blue-800 uppercase tracking-wider">Nom</th>
+            <th scope="col" class="px-8 py-5 text-left text-lg font-bold text-blue-800 uppercase tracking-wider">Prénom</th>
+            <th scope="col" class="px-8 py-5 text-left text-lg font-bold text-blue-800 uppercase tracking-wider">Téléphone</th>
+            <th scope="col" class="px-8 py-5 text-left text-lg font-bold text-blue-800 uppercase tracking-wider">Adresse</th>
+            <th scope="col" class="px-8 py-5 text-left text-lg font-bold text-blue-800 uppercase tracking-wider">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-blue-200/30">
+          <tr *ngFor="let etudiant of etudiants; let i = index" 
+               class="group relative transition-all duration-300 hover:bg-blue-50/80 cursor-pointer">
+            <td class="px-8 py-5 whitespace-nowrap text-lg font-semibold text-blue-900">
+              <div class="flex items-center gap-3">
+                <span class="w-2.5 h-2.5 bg-blue-500 rounded-full animate-pulse"></span>
+                <span>{{ etudiant.matricule }}</span>
+              </div>
+            </td>
+            <td class="px-8 py-5 whitespace-nowrap text-lg text-blue-800 font-medium">{{ etudiant.nom }}</td>
+            <td class="px-8 py-5 whitespace-nowrap text-lg text-blue-800 font-medium">{{ etudiant.prenom }}</td>
+            <td class="px-8 py-5 whitespace-nowrap text-lg text-blue-800 font-medium">{{ etudiant.telephone }}</td>
+            <td class="px-8 py-5 whitespace-nowrap text-lg text-blue-800 font-medium max-w-xs truncate">{{ etudiant.adresse }}</td>
+            <td class="px-8 py-5 whitespace-nowrap text-sm flex gap-3">
+              <button (click)="ouvrirModal(true, etudiant)" 
+                [attr.aria-label]="'Modifier ' + etudiant.prenom"
+                class="p-2.5 rounded-xl text-green-600 hover:bg-green-100/80 transition-all duration-300 shadow hover:shadow-md focus:outline-none focus:ring-2 focus:ring-green-300/50 group-hover:transform group-hover:scale-110"
+                type="button">
+                <i class="fas fa-edit text-lg"></i>
+              </button>
+              <button (click)="supprimer(etudiant.id!)" 
+                [attr.aria-label]="'Supprimer ' + etudiant.prenom"
+                class="p-2.5 rounded-xl text-red-600 hover:bg-red-100/80 transition-all duration-300 shadow hover:shadow-md focus:outline-none focus:ring-2 focus:ring-red-300/50 group-hover:transform group-hover:scale-110"
+                type="button">
+                <i class="fas fa-trash-alt text-lg"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- No results message -->
+    <div *ngIf="etudiants.length === 0" class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/30 p-12 text-center">
+      <div class="text-blue-400 text-6xl mb-4">
+        <i class="fas fa-user-graduate"></i>
+      </div>
+      <h3 class="text-2xl font-bold text-blue-800 mb-2">Aucun étudiant trouvé</h3>
+      <p class="text-blue-600 mb-6">Commencez par ajouter votre premier étudiant</p>
+      <button (click)="ouvrirModal(false)"
+        class="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg transform hover:scale-105 transition-all duration-300 inline-flex items-center gap-2">
+        <i class="fas fa-plus"></i> Ajouter un étudiant
+      </button>
+    </div>
+  </div>
+
+  <!-- Enhanced Modal -->
+  <div id="etudiantModal" 
+       class="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center z-50 hidden animate-fadeIn scale-90">
+    <div class="bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-2xl p-8 w-full max-w-lg relative transform transition-all duration-300 border border-white/30 overflow-hidden">
+      <!-- Decorative elements -->
+      <div class="absolute -top-20 -right-20 w-40 h-40 bg-blue-200 rounded-full opacity-20"></div>
+      <div class="absolute -bottom-20 -left-20 w-60 h-60 bg-indigo-200 rounded-full opacity-20"></div>
+      
+      <button class="absolute top-4 right-4 text-blue-500 hover:text-red-500 text-2xl font-bold z-10 transition-colors duration-300"
+        (click)="fermerModal()" aria-label="Fermer la fenêtre" type="button">
+        <i class="fas fa-times"></i>
+      </button>
+      
+      <div class="relative z-10">
+        <h3 class="text-2xl font-bold mb-6 text-blue-900 flex items-center gap-3">
+          <span class="icon-container bg-gradient-to-br from-blue-500 to-indigo-600 shadow-md">
+            <i [class]="modeModification ? 'fas fa-edit' : 'fas fa-plus'"></i>
+          </span>
+          {{ modeModification ? 'Modifier un étudiant' : 'Ajouter un étudiant' }}
+        </h3>
+
+        <form [formGroup]="etudiantForm" (ngSubmit)="onSubmit()" class="space-y-5">
+          <div class="form-group">
+            <label class="block text-sm font-semibold text-blue-800 mb-2">Matricule</label>
+            <div class="relative">
+              <input type="text" placeholder="Matricule" formControlName="matricule"
+                     class="w-full px-5 py-3 border-2 border-blue-200 rounded-xl focus:outline-none focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100 bg-white/80 backdrop-blur-sm shadow-sm transition-all duration-300" />
+              <span class="absolute right-3 top-3.5 text-blue-400">
+                <i class="fas fa-id-card"></i>
+              </span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="block text-sm font-semibold text-blue-800 mb-2">Nom *</label>
+            <div class="relative">
+              <input type="text" placeholder="Nom" formControlName="nom" required
+                     class="w-full px-5 py-3 border-2 border-blue-200 rounded-xl focus:outline-none focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100 bg-white/80 backdrop-blur-sm shadow-sm transition-all duration-300" />
+              <span class="absolute right-3 top-3.5 text-blue-400">
+                <i class="fas fa-user"></i>
+              </span>
+            </div>
+            <div *ngIf="etudiantForm.controls['nom'].touched && etudiantForm.controls['nom'].invalid" 
+                 class="text-red-600 mt-1 text-sm font-semibold">Nom requis</div>
+          </div>
+
+          <div class="form-group">
+            <label class="block text-sm font-semibold text-blue-800 mb-2">Prénom *</label>
+            <div class="relative">
+              <input type="text" placeholder="Prénom" formControlName="prenom" required
+                     class="w-full px-5 py-3 border-2 border-blue-200 rounded-xl focus:outline-none focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100 bg-white/80 backdrop-blur-sm shadow-sm transition-all duration-300" />
+              <span class="absolute right-3 top-3.5 text-blue-400">
+                <i class="fas fa-user-tag"></i>
+              </span>
+            </div>
+            <div *ngIf="etudiantForm.controls['prenom'].touched && etudiantForm.controls['prenom'].invalid" 
+                 class="text-red-600 mt-1 text-sm font-semibold">Prénom requis</div>
+          </div>
+
+          <div class="form-group">
+            <label class="block text-sm font-semibold text-blue-800 mb-2">Téléphone</label>
+            <div class="relative">
+              <input type="text" placeholder="Téléphone" formControlName="telephone"
+                     class="w-full px-5 py-3 border-2 border-blue-200 rounded-xl focus:outline-none focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100 bg-white/80 backdrop-blur-sm shadow-sm transition-all duration-300" />
+              <span class="absolute right-3 top-3.5 text-blue-400">
+                <i class="fas fa-phone-alt"></i>
+              </span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="block text-sm font-semibold text-blue-800 mb-2">Adresse</label>
+            <div class="relative">
+              <input type="text" placeholder="Adresse" formControlName="adresse"
+                     class="w-full px-5 py-3 border-2 border-blue-200 rounded-xl focus:outline-none focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100 bg-white/80 backdrop-blur-sm shadow-sm transition-all duration-300" />
+              <span class="absolute right-3 top-3.5 text-blue-400">
+                <i class="fas fa-map-marker-alt"></i>
+              </span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="block text-sm font-semibold text-blue-800 mb-2">Classe *</label>
+            <div class="relative">
+              <select formControlName="classeId" required
+                      class="w-full px-5 py-3 border-2 border-blue-200 rounded-xl focus:outline-none focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100 bg-white/80 backdrop-blur-sm shadow-sm transition-all duration-300 appearance-none">
+                <option value="" disabled>-- Sélectionner une classe --</option>
+                <option *ngFor="let classe of classes" [value]="classe.id">{{ classe.libelle }}</option>
+              </select>
+              <span class="absolute right-3 top-3.5 text-blue-400 pointer-events-none">
+                <i class="fas fa-chevron-down"></i>
+              </span>
+            </div>
+            <div *ngIf="etudiantForm.controls['classeId'].touched && etudiantForm.controls['classeId'].invalid" 
+                 class="text-red-600 mt-1 text-sm font-semibold">Classe requise</div>
+          </div>
+
+          <div class="flex justify-end gap-4 pt-6">
+            <button type="button" (click)="fermerModal()"
+                    class="bg-blue-200 hover:bg-blue-300 text-blue-800 px-6 py-3 rounded-xl flex items-center gap-2 focus:outline-none focus:ring-4 focus:ring-blue-300/50 transition-all duration-300 shadow hover:shadow-md">
+              <i class="fas fa-times"></i> Annuler
+            </button>
+            <button type="submit" [disabled]="etudiantForm.invalid"
+                    class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-6 py-3 rounded-xl shadow-lg flex items-center gap-2 focus:outline-none focus:ring-4 focus:ring-indigo-400/50 transition-all duration-300 transform hover:scale-105 disabled:opacity-70 disabled:transform-none">
+              <i [class]="modeModification ? 'fas fa-save' : 'fas fa-plus-circle'"></i>
+              {{ modeModification ? 'Enregistrer' : 'Ajouter' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Animations */
+  @keyframes blob {
+    0% { transform: translate(0px, 0px) scale(1); }
+    33% { transform: translate(30px, -50px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.9); }
+    100% { transform: translate(0px, 0px) scale(1); }
+  }
+
+  @keyframes gradient-x {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95) translateY(10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  /* Custom animations */
+  .animate-blob-slow {
+    animation: blob 25s ease-in-out infinite;
+  }
+
+  .animate-blob-slow-delay {
+    animation: blob 25s ease-in-out 5s infinite;
+  }
+
+  .animate-gradient-x {
+    background-size: 200% 200%;
+    animation: gradient-x 6s ease infinite;
+  }
+
+  .animate-fadeIn {
+    animation: fadeIn 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6) forwards;
+  }
+
+  /* Custom components */
+  .icon-container {
+    @apply w-10 h-10 rounded-xl flex items-center justify-center text-white shadow-md;
+    transition: all 0.3s ease;
+  }
+
+  .form-group {
+    @apply transition-all duration-300 transform hover:-translate-y-0.5;
+  }
+
+  /* Table row effects */
+  tr:hover td:not(:last-child) {
+    @apply transform translate-x-2 transition-transform duration-300;
+  }
+
+  /* Button hover effects */
+  button:hover i {
+    @apply transform scale-125 transition-transform duration-300;
+  }
+
+  /* Custom select arrow */
+  select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+</style>

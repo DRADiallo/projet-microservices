@@ -1,0 +1,131 @@
+<nav class="bg-gradient-to-r from-blue-400 to-blue-600 shadow-lg sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+
+      <!-- Logo / Brand à gauche -->
+      <div class="flex-shrink-0 flex items-center">
+        <a routerLink="/" class="flex items-center space-x-3 text-white hover:text-blue-200 transition-colors duration-200">
+          <div class="bg-white bg-opacity-25 p-2 rounded-lg backdrop-blur-sm shadow-sm">
+            <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/>
+            </svg>
+          </div>
+          <div class="flex flex-col leading-tight">
+            <span class="text-lg font-bold select-none">Gestion Scolaire</span>
+            <!-- <span class="text-xs text-blue-200 font-light select-none">Gestion Scolaire</span> -->
+          </div>
+        </a>
+      </div>
+
+      <!-- Menu Desktop -->
+      <div class="hidden md:flex items-center space-x-4 max-w-3xl justify-end flex-grow">
+        <a
+          routerLink="/"
+          routerLinkActive="bg-white bg-opacity-25 text-white shadow-md"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="text-blue-100 hover:bg-white hover:bg-opacity-30 hover:text-blue-900 px-5 py-2 rounded-lg text-sm font-semibold transition duration-200 flex items-center space-x-2 backdrop-blur-sm select-none"
+          title="Accueil"
+        >
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+          </svg>
+          <span>Accueil</span>
+        </a>
+
+        <a
+          routerLink="/classe"
+          routerLinkActive="bg-white bg-opacity-25 text-white shadow-md"
+          class="text-blue-100 hover:bg-white hover:bg-opacity-30 hover:text-blue-900 px-5 py-2 rounded-lg text-sm font-semibold transition duration-200 flex items-center space-x-2 backdrop-blur-sm select-none"
+          title="Classes"
+        >
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3z"/>
+            <path d="M3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762z"/>
+          </svg>
+          <span>Classes</span>
+        </a>
+
+        <a
+          routerLink="/etudiant"
+          routerLinkActive="bg-white bg-opacity-25 text-white shadow-md"
+          class="text-blue-100 hover:bg-white hover:bg-opacity-30 hover:text-blue-900 px-5 py-2 rounded-lg text-sm font-semibold transition duration-200 flex items-center space-x-2 backdrop-blur-sm select-none"
+          title="Étudiants"
+        >
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/>
+          </svg>
+          <span>Étudiants</span>
+        </a>
+
+
+       <a
+        routerLink="/statistiques"
+        routerLinkActive="bg-white bg-opacity-25 text-white shadow-md"
+        class="text-blue-100 hover:bg-white hover:bg-opacity-30 hover:text-blue-900 px-5 py-2 rounded-lg text-sm font-semibold transition duration-200 flex items-center space-x-2 backdrop-blur-sm select-none"
+        title="Statistiques"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19V10M9 19V4M14 19v-7M19 19v-3" />
+        </svg>
+        <span>Statistiques</span>
+      </a>
+
+
+
+
+
+
+
+      </div>
+
+      <!-- Menu Mobile Hamburger -->
+      <div class="md:hidden flex items-center">
+        <button id="mobile-menu-button" aria-label="Toggle menu" class="text-white focus:outline-none">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile menu, hidden by default -->
+  <div id="mobile-menu" class="hidden md:hidden bg-blue-500 bg-opacity-90">
+    <a
+      routerLink="/"
+      routerLinkActive="bg-blue-700 text-white"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="block px-6 py-3 text-white hover:bg-blue-700 transition"
+      title="Accueil"
+    >
+      Accueil
+    </a>
+    <a
+      routerLink="/classe"
+      routerLinkActive="bg-blue-700 text-white"
+      class="block px-6 py-3 text-white hover:bg-blue-700 transition"
+      title="Classes"
+    >
+      Classes
+    </a>
+    <a
+      routerLink="/etudiant"
+      routerLinkActive="bg-blue-700 text-white"
+      class="block px-6 py-3 text-white hover:bg-blue-700 transition"
+      title="Étudiants"
+    >
+      Étudiants
+    </a>
+  </div>
+</nav>
+
+<router-outlet></router-outlet>
+
+<script>
+  const btn = document.getElementById('mobile-menu-button');
+  const menu = document.getElementById('mobile-menu');
+
+  btn.addEventListener('click', () => {
+    menu.classList.toggle('hidden');
+  });
+</script>

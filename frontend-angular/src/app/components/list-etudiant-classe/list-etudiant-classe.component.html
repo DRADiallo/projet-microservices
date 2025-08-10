@@ -1,0 +1,165 @@
+<div class="p-6 bg-gradient-to-br from-blue-50 via-indigo-50 to-blue-100 min-h-screen relative overflow-hidden">
+  <!-- Animated background elements -->
+  <div class="absolute inset-0 overflow-hidden z-0">
+    <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-200 rounded-full opacity-10 animate-blob-slow"></div>
+    <div class="absolute bottom-1/3 right-1/4 w-48 h-48 bg-indigo-200 rounded-full opacity-10 animate-blob-slow-delay"></div>
+  </div>
+
+  <div class="relative z-10">
+    <!-- Enhanced header with floating effect -->
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-8 gap-4 transform transition duration-500 hover:-translate-y-1">
+      <div>
+        <h2 class="text-3xl md:text-4xl font-extrabold mb-2 flex items-center gap-3">
+          <span class="icon-container bg-gradient-to-br from-blue-500 to-indigo-600 shadow-lg">
+            <i class="fas fa-users text-white text-xl"></i>
+          </span>
+          <span class="relative">
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 animate-gradient-x">Étudiants de la classe</span>
+            <span class="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-full"></span>
+          </span>
+        </h2>
+        <div class="flex items-center gap-4">
+          <span class="text-xl font-semibold text-blue-800 bg-blue-100/80 px-4 py-2 rounded-lg shadow-sm border border-blue-200">
+            "{{ classeNom }}"
+          </span>
+        </div>
+      </div>
+      
+      <!-- Action buttons -->
+      <div class="flex gap-3">
+        <button class="group relative overflow-hidden bg-gradient-to-r from-blue-500 to-blue-600 text-white px-5 py-2.5 rounded-lg font-medium shadow-md transform hover:scale-105 transition-all duration-300 flex items-center gap-2">
+          <i class="fas fa-file-export group-hover:animate-bounce"></i>
+          <span>Exporter</span>
+        </button>
+        
+      </div>
+    </div>
+
+    <!-- Enhanced table with glassmorphism effect -->
+    <div class="overflow-x-auto bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-white/30 relative">
+      <div class="absolute inset-0 bg-gradient-to-br from-blue-50/30 to-indigo-50/30 rounded-2xl -z-10"></div>
+      
+      <table class="min-w-full divide-y divide-blue-200/50">
+        <thead class="bg-gradient-to-r from-blue-50 to-indigo-50">
+          <tr>
+            <th scope="col" class="px-8 py-5 text-left text-lg font-bold text-blue-800 uppercase tracking-wider">
+              <div class="flex items-center gap-3">
+                <i class="fas fa-id-badge text-blue-500 text-xl"></i>
+                <span>Matricule</span>
+              </div>
+            </th>
+            <th scope="col" class="px-8 py-5 text-left text-lg font-bold text-blue-800 uppercase tracking-wider">
+              <div class="flex items-center gap-3">
+                <i class="fas fa-user text-blue-500 text-xl"></i>
+                <span>Nom</span>
+              </div>
+            </th>
+            <th scope="col" class="px-8 py-5 text-left text-lg font-bold text-blue-800 uppercase tracking-wider">
+              <div class="flex items-center gap-3">
+                <i class="fas fa-user-tag text-blue-500 text-xl"></i>
+                <span>Prénom</span>
+              </div>
+            </th>
+            <th scope="col" class="px-8 py-5 text-left text-lg font-bold text-blue-800 uppercase tracking-wider">
+              <div class="flex items-center gap-3">
+                <i class="fas fa-phone-alt text-blue-500 text-xl"></i>
+                <span>Téléphone</span>
+              </div>
+            </th>
+            
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-blue-200/30">
+          <tr *ngFor="let etudiant of etudiants; let i = index" 
+               class="group relative transition-all duration-300 hover:bg-blue-50/80 cursor-pointer">
+            <td class="px-8 py-5 whitespace-nowrap text-lg font-semibold text-blue-900">
+              <div class="flex items-center gap-3">
+                <span class="w-2.5 h-2.5 bg-blue-500 rounded-full animate-pulse"></span>
+                <span>{{ etudiant.matricule }}</span>
+              </div>
+            </td>
+            <td class="px-8 py-5 whitespace-nowrap text-lg text-blue-800 font-medium">{{ etudiant.nom }}</td>
+            <td class="px-8 py-5 whitespace-nowrap text-lg text-blue-800 font-medium">{{ etudiant.prenom }}</td>
+            <td class="px-8 py-5 whitespace-nowrap text-lg text-blue-800 font-medium">{{ etudiant.telephone }}</td>
+            <!-- <td class="px-8 py-5 whitespace-nowrap text-right">
+              <div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <button class="p-2.5 rounded-xl text-blue-600 hover:bg-blue-100/80 transition-all duration-300 shadow hover:shadow-md">
+                  <i class="fas fa-eye text-lg"></i>
+                </button>
+                <button class="p-2.5 rounded-xl text-green-600 hover:bg-green-100/80 transition-all duration-300 shadow hover:shadow-md">
+                  <i class="fas fa-edit text-lg"></i>
+                </button>
+                <button class="p-2.5 rounded-xl text-red-600 hover:bg-red-100/80 transition-all duration-300 shadow hover:shadow-md">
+                  <i class="fas fa-trash-alt text-lg"></i>
+                </button>
+              </div>
+            </td> -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="mt-8 flex justify-center">
+      <nav class="flex items-center gap-1 bg-white/80 backdrop-blur-sm rounded-xl shadow-md border border-blue-200/50 p-2">
+        <button class="p-2 rounded-lg text-blue-600 hover:bg-blue-100/80 transition-all">
+          <i class="fas fa-angle-double-left"></i>
+        </button>
+        <button class="w-10 h-10 rounded-lg bg-blue-600 text-white font-medium">1</button>
+        <button class="w-10 h-10 rounded-lg text-blue-600 hover:bg-blue-100/80 transition-all">2</button>
+        <button class="w-10 h-10 rounded-lg text-blue-600 hover:bg-blue-100/80 transition-all">3</button>
+        <span class="px-2 text-blue-500">...</span>
+        <button class="w-10 h-10 rounded-lg text-blue-600 hover:bg-blue-100/80 transition-all">8</button>
+        <button class="p-2 rounded-lg text-blue-600 hover:bg-blue-100/80 transition-all">
+          <i class="fas fa-angle-double-right"></i>
+        </button>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Animations */
+  @keyframes blob {
+    0% { transform: translate(0px, 0px) scale(1); }
+    33% { transform: translate(30px, -50px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.9); }
+    100% { transform: translate(0px, 0px) scale(1); }
+  }
+
+  @keyframes gradient-x {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* Custom animations */
+  .animate-blob-slow {
+    animation: blob 25s ease-in-out infinite;
+  }
+
+  .animate-blob-slow-delay {
+    animation: blob 25s ease-in-out 5s infinite;
+  }
+
+  .animate-gradient-x {
+    background-size: 200% 200%;
+    animation: gradient-x 6s ease infinite;
+  }
+
+  /* Custom components */
+  .icon-container {
+    @apply w-10 h-10 rounded-xl flex items-center justify-center text-white shadow-md;
+    transition: all 0.3s ease;
+  }
+
+  /* Table row effects */
+  tr:hover td:not(:last-child) {
+    @apply transform translate-x-2 transition-transform duration-300;
+  }
+
+  /* Button hover effects */
+  button:hover i {
+    @apply transform scale-125 transition-transform duration-300;
+  }
+</style>
